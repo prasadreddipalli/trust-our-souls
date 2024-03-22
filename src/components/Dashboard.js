@@ -1,5 +1,7 @@
 
 import React, { useContext, useState, useEffect } from "react";
+
+import { useLocation } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -101,9 +103,17 @@ const Layout = ({ children }) => (
 const defaultTheme = createTheme();
 
 
+
+
 const  Dashboard=()=> {
+  const location = useLocation();
   const [open, setOpen] = React.useState(true);
   const [activeLink, setActiveLink] = useState('');
+
+  useEffect(() => {
+    // Set the active link based on the current route
+    setActiveLink(location.pathname);
+  }, [location]);
  
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -118,9 +128,8 @@ const  Dashboard=()=> {
     <>
       <React.Fragment>
         <ListItemButton
-          selected={activeLink === '/home'}
+          selected={activeLink === '/dashboard/home'}
           onClick={() => handleLinkClick('/home')}
-
           button="true" component={Link} to="/dashboard/home">
           <ListItemIcon>
             <HomeIcon />
@@ -128,18 +137,17 @@ const  Dashboard=()=> {
           <ListItemText primary="Home" />
         </ListItemButton>
         <ListItemButton
-          selected={activeLink === '/profile'}
+          selected={activeLink === '/dashboard/profile'}
           onClick={() => handleLinkClick('/profile')}
-
           button="true" component={Link} to="/dashboard/profile">
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItemButton>
-        <ListItemButton  selected={activeLink === '/search'}
+        <ListItemButton  
+          selected={activeLink === '/dashboard/search'}
           onClick={() => handleLinkClick('/search')}
-
           button="true" component={Link} to="/dashboard/search">
           <ListItemIcon>
             <PersonSearchIcon />
@@ -171,7 +179,7 @@ const  Dashboard=()=> {
        <LandingPage/>
         :
         <ThemeProvider theme={defaultTheme}>
-        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+        <Box sx={{ display: 'flex', minHeight: '95vh' }}>
             <CssBaseline />
             <AppBar position="absolute" open={open}>
               <Toolbar
