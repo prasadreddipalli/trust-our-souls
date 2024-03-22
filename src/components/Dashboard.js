@@ -245,6 +245,7 @@ const  Dashboard=()=> {
                 width: '100%',
               }}
             >
+              
               <Toolbar />
             
               <Routes>
@@ -253,9 +254,13 @@ const  Dashboard=()=> {
                 <Route path="/search" element={<SearchPage />} />
             </Routes>
              
-                        
+           
             </Box>
+           
           </Box>
+          <footer style={{ marginTop: 'auto', backgroundColor: '#1976d2', padding: '20px', textAlign: 'center' }}>
+               © 2024 Trust Our Souls
+           </footer>
         </ThemeProvider>
 
       }
