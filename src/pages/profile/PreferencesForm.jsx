@@ -100,6 +100,7 @@ const PreferencesForm = ({ formData, handleInputChange, validationStatus, nextBu
               inputProps={{ maxLength: 2 }} 
               sx={{ width: '60px' }} 
               autoComplete="given-name"
+              style={{ border: nextButtonClicked && !validationStatus.preferred_low_age_range ? '1px solid red' : '' }}
               variant="standard"
             />
           </Grid>
@@ -114,7 +115,7 @@ const PreferencesForm = ({ formData, handleInputChange, validationStatus, nextBu
               type="number"
               inputProps={{ maxLength: 2 }} 
               sx={{ width: '60px' }} 
-            
+              style={{ border: nextButtonClicked && !validationStatus.preferred_high_age_range ? '1px solid red' : '' }}
               autoComplete="given-name"
               variant="standard"
             />

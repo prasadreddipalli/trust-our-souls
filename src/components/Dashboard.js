@@ -25,6 +25,7 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import PeopleIcon from '@mui/icons-material/People';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { Logout } from '@mui/icons-material'; 
 import Tooltip from '@mui/material/Tooltip';
@@ -43,6 +44,7 @@ import HomePage from '../pages/HomePage';
 import { AboutUs } from '../pages/AboutUs';
 import Profile from '../pages/profile/Profile';
 import LandingPage from "./LandingPage";
+import SearchPage from "../pages/profile/search/SearchPage";
 
 const drawerWidth = 240;
 
@@ -135,11 +137,14 @@ const  Dashboard=()=> {
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton  selected={activeLink === '/search'}
+          onClick={() => handleLinkClick('/search')}
+
+          button="true" component={Link} to="/dashboard/search">
           <ListItemIcon>
-            <PeopleIcon />
+            <PersonSearchIcon />
           </ListItemIcon>
-          <ListItemText primary="Users" />
+          <ListItemText primary="Search" />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
@@ -245,6 +250,7 @@ const  Dashboard=()=> {
               <Routes>
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/search" element={<SearchPage />} />
             </Routes>
              
                         

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
-import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../../firebase/auth'
+import { doSignInWithEmailAndPassword, doSignInWithGoogle ,addUserToDB} from '../../../firebase/auth'
 import { useAuth } from '../../../contexts/authContext'
 import backgroundImage from '../../../images/landing.png';
 import loginInmage from '../../../images/couple.jpg';
@@ -17,8 +17,16 @@ const Login = () => {
         e.preventDefault()
         if (!isSigningIn) {
             setIsSigningIn(true)
-            await doSignInWithEmailAndPassword(email, password)
-            // doSendEmailVerification()
+            await doSignInWithEmailAndPassword(email, password) .then((resp) => {
+                setIsSigningIn(true);
+                console.log(" user...."+ JSON.stringify(resp.user));
+                return addUserToDB(resp.user);
+            })
+            .catch((err) => {
+                setIsSigningIn(false);
+                setErrorMessage("Invalid username/password")
+                console.error("Error during eamil/password signin:", err);
+            });
         }
     }
 
@@ -26,7 +34,6 @@ const Login = () => {
         e.preventDefault()
         if (!isSigningIn) {
             setIsSigningIn(true)
-
             doSignInWithGoogle()
                 .then(() => {
                     setIsSigningIn(true);
@@ -35,6 +42,7 @@ const Login = () => {
                 })
                 .catch((err) => {
                     setIsSigningIn(false);
+                    setErrorMessage("Invalid username/password")
                     console.error("Error during Google sign-in:", err);
                 });
         }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Navigate, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../contexts/authContext'
-import { doCreateUserWithEmailAndPassword } from '../../../firebase/auth'
+import { doCreateUserWithEmailAndPassword, addUserToDB } from '../../../firebase/auth'
+
 
 const Register = () => {
 
@@ -17,13 +18,33 @@ const Register = () => {
         e.preventDefault()
         if (!isRegistering) {
             setIsRegistering(true)
-            await doCreateUserWithEmailAndPassword(email, password)
+               // await doCreateUserWithEmailAndPassword(email, password);
+               doCreateUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // User successfully created
+                    const user = userCredential.user;
+                    console.log("New user UID:", user.uid);
+                    addUserToDB(user);
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        setErrorMessage('The email address is already in use.');
+                        setIsRegistering(false)
+                    } else {
+                        // Handle other errors
+                        setErrorMessage(error.message);
+                    }
+                });
+            
+             
+            
         }
     }
 
+
     return (
         <>
-            {userLoggedIn && (<Navigate to={'/home'} replace={true} />)}
+            {userLoggedIn && (<Navigate to={'/dashboard/login'} replace={true} />)}
 
             <main className="w-full h-screen flex self-center place-content-center place-items-center">
                 <div className="w-96 text-gray-600 space-y-5 p-4 shadow-xl border rounded-xl">

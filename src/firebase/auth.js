@@ -33,6 +33,23 @@ export const doSignInWithGoogle = async () => {
   const result = await signInWithPopup(auth, provider);
   const user = result.user;
 
+  /*console.log("google user " + JSON.stringify(user));
+ 
+  try {
+    const resp =   await loginUser(user);
+    console.log("db user " + JSON.stringify(resp));
+ 
+    saveUserToLocalStorage(resp);
+   
+  } catch (error) {
+    saveUserToLocalStorage([]);
+  }*/
+   return addUserToDB(user);
+
+};
+
+export const addUserToDB = async (user) => {
+
   console.log("google user " + JSON.stringify(user));
  
   try {
@@ -44,9 +61,7 @@ export const doSignInWithGoogle = async () => {
   } catch (error) {
     saveUserToLocalStorage([]);
   }
-
-  return user;
-};
+}
 
 
 export const  loginUser=(user) => 

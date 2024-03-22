@@ -81,18 +81,24 @@ export default function Profile() {
     gender: false,
     date_of_birth: false,
     place_of_birth: false,
-    country: false
+    country: false,
+    time_of_birth: false
   });
 
   const [validFieldsPersonal, setValidFieldsPersonal] = useState({
     profession: false,
     relationship_status: false,
     income: false,
-    no_of_children: false
+    start_a_family: false,
+    no_of_children: false,
+    smoke_frequency: false,
+    alcohol_frequency: false,
   });
 
   const [validFieldsPreferences, setValidFieldsPreferences] = useState({
-    preferred_gender: false
+    preferred_gender: false,
+    preferred_low_age_range: false,
+    preferred_high_age_range: false,
   });
 
   const validateStep = (stepNo) => {
@@ -154,7 +160,7 @@ export default function Profile() {
     const highAge = parseInt(preferred_high_age_range);
     const isValidAgeRange = highAge > lowAge;
 
-    if (!isValidAgeRange) {
+    if (!isValidAgeRange && (validFieldsPreferences.preferred_low_age_range && validFieldsPreferences.preferred_high_age_range)) {
       toast.error('Low age cannot be grerater than High age');
       return false;
     }
@@ -214,7 +220,9 @@ export default function Profile() {
     setNextButtonClicked(true);
     isValid = validateStep(activeStep);
     if (activeStep == 2) {
-      isValidAgeRange();
+      if (!isValidAgeRange()) {
+        return;
+      }
     }
     console.log("isValid " + isValid);
     if (isValid) {
