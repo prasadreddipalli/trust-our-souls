@@ -171,7 +171,7 @@ const  Dashboard=()=> {
        <LandingPage/>
         :
         <ThemeProvider theme={defaultTheme}>
-          <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
             <CssBaseline />
             <AppBar position="absolute" open={open}>
               <Toolbar
