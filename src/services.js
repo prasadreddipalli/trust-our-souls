@@ -3,7 +3,7 @@ import AWS from 'aws-sdk';
 
 export const login = async (user) => {
   try {
-    const response = await axios.post('http://localhost:3001/login', {
+    const response = await axios.post('http://3.209.107.110:3001/login', {
       user: user
     });
 
@@ -17,7 +17,7 @@ export const login = async (user) => {
 
 export const addUseProfile = async (profile) => {
   try {
-    const response = await axios.post('http://localhost:3001/profile', {
+    const response = await axios.post('http://3.209.107.110:3001/profile', {
       profile: profile,
     });
     console.log(response.data);
@@ -30,7 +30,7 @@ export const addUseProfile = async (profile) => {
 
 export const fetchUserProfile = async (userId) => {
   try {
-    const response = await axios.get(`http://localhost:3001/profile/${userId}`);
+    const response = await axios.get(`http://3.209.107.110:3001/profile/${userId}`);
     return response.data; 
   } catch (error) {
     console.error('Error fetching user profile:', error);
@@ -40,7 +40,7 @@ export const fetchUserProfile = async (userId) => {
 
 export const fetchALlUserProfiles = async (usrId) => {
   try {
-    const response = await axios.get(`http://localhost:3001/profile/all`);
+    const response = await axios.get(`http://3.209.107.110:3001/profile/all`);
     return response.data; 
   } catch (error) {
     console.error('Error fetching user profile:', error);
@@ -50,7 +50,7 @@ export const fetchALlUserProfiles = async (usrId) => {
 
 export const fetchProfiles = async (values) => {
   try {
-    const response = await axios.post(`http://localhost:3001/profile/search`, {
+    const response = await axios.post(`http://3.209.107.110:3001/profile/search`, {
       search: values,
     });
 
