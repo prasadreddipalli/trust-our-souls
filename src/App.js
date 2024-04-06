@@ -1,6 +1,6 @@
 import "./App.css";
 
-import '@fortawesome/fontawesome-free/css/all.css';
+//import '@fortawesome/fontawesome-free/css/all.css';
 
 import * as React from 'react';
 import Dashboard from "./components/Dashboard";
