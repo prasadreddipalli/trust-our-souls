@@ -78,7 +78,7 @@ const MainPage = () => {
         <CardActionArea style={{ flex: 1 }}>
           <CardMedia
             component="img"
-            sx={{ height: '18vw',backgroundColor: 'bisque' }}
+            sx={{ height: '18vw',backgroundColor: 'aliceblue' }}
             image={image}
             alt={title}
           />
@@ -87,7 +87,7 @@ const MainPage = () => {
           <Typography gutterBottom variant="h5" component="div">
             {title}
           </Typography>
-          <Typography paragraph sx={{ backgroundColor: '#0c3150' }}>
+          <Typography paragraph sx={{ backgroundColor: 'aliceblue' }}>
             {content}
           </Typography>
         </CardContent>
@@ -98,7 +98,7 @@ const MainPage = () => {
   const CustomCard = ({ image, title, content }) => {
     return (
       <Card style={cardStyle} sx={{ maxWidth: 360 }}>
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 1 ,backgroundColor: 'aqua;'}}>
           <CardHeader
             avatar={
               <Avatar src={image} >
