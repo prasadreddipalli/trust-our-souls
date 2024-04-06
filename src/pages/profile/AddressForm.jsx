@@ -17,6 +17,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
+import profileImage from '../../images/profile.jpg'
+import idCardImage from '../../images/idCard.png'
+import personImage from '../../images/person.png'
 
 
 const AddressForm = ({ formData, handleInputChange, validationStatus, nextButtonClicked, theme }) => {
@@ -24,10 +27,14 @@ const AddressForm = ({ formData, handleInputChange, validationStatus, nextButton
     <ThemeProvider theme={theme}>
       <React.Fragment>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
-            <ProfilePicture />
+          <Grid item xs={12} sm={6}>
+            <ProfilePicture name="profile_picture" image={personImage}  handleInputChange={handleInputChange}/>
             <br />
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <ProfilePicture name="id_picture" image={idCardImage} handleInputChange={handleInputChange}/>
+            <br />
+            </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               required

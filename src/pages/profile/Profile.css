@@ -64,7 +64,7 @@ input[type="file"] {
   width: 200px;
   height: 200px;
   overflow: hidden;
-  border-radius: 50%;
+ /* border-radius: 50%;*/
 }
 
 .img-upload:before {
@@ -76,13 +76,14 @@ input[type="file"] {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: #63d3a6;
+  color: black;
   width: 200px;
   height: 200px;
   border-radius: 50%;
   opacity: 0;
   transition: .5s ease;
   background-color: #fff;
+
 }
 
 .img-upload:hover:before {

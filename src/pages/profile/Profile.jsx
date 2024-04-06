@@ -17,8 +17,10 @@ import PreferencesForm from './PreferencesForm';
 import Review from './Review';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getUserFromLocalStorage, saveUserToLocalStorage } from '../../firebase/auth'
-import { fetchUserProfile, addUseProfile } from '../../services';
+import { fetchUserProfile, addUseProfile ,uploadToS3 } from '../../services';
 import { ToastContainer } from 'react-toastify';
+
+
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,7 +33,7 @@ export default function Profile() {
   const [stepData, setStepData] = useState({});
   const [nextButtonClicked, setNextButtonClicked] = useState(false);
   const [formData, setFormData] = useState({
-    profilePicture: '',
+    profile_picture: '',
     first_name: '',
     middle_name: '',
     last_name: '',
@@ -239,7 +241,8 @@ export default function Profile() {
     const mapFormDataToProfileData = (formData) => {
       return {
         uid: user.uid,
-        // profile_picture: formData.profilePicture,
+        profile_picture: formData.profile_picture,
+        id_picture: formData.id_picture,
         first_name: formData.first_name,
         middle_name: formData.middle_name,
         last_name: formData.last_name,
@@ -281,6 +284,7 @@ export default function Profile() {
     }
 
     const profileData = mapFormDataToProfileData(formData);
+   // uploadToS3(profileData.first_name+"_"+profileData.last_name,profileData.profile_picture);
     try {
       const resp = await addUseProfile(profileData);
     } catch (error) {

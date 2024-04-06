@@ -46,7 +46,7 @@ import HomePage from '../pages/HomePage';
 import { AboutUs } from '../pages/AboutUs';
 import Profile from '../pages/profile/Profile';
 import LandingPage from "./LandingPage";
-import SearchPage from "../pages/profile/search/SearchPage";
+import SearchPage from "../pages/search/SearchPage";
 
 const drawerWidth = 240;
 
@@ -173,10 +173,10 @@ const  Dashboard=()=> {
 
   return (
     <>
-      {!userLoggedIn ?
-       
-
-       <LandingPage/>
+      {!userLoggedIn ? (
+        <LandingPage/>
+      
+        )
         :
         <ThemeProvider theme={defaultTheme}>
         <Box sx={{ display: 'flex', minHeight: '95vh' }}>
@@ -269,7 +269,7 @@ const  Dashboard=()=> {
           <footer style={{ marginTop: 'auto', backgroundColor: '#1976d2', padding: '20px', textAlign: 'center' }}>
                © 2024 Trust Our Souls
            </footer>
-        </ThemeProvider>
+        </ThemeProvider> 
 
       }
     </>

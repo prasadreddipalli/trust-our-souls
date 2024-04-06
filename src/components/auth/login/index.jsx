@@ -60,7 +60,7 @@ const Login = () => {
                 
                     <div className="text-center">
                         <div className="mt-2">
-                            <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">Welcome Back</h3>
+                            <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">Trust Our Souls</h3>
                         </div>
                     </div>
                     <form

@@ -4,10 +4,8 @@ import {
   useMaterialReactTable
 } from "material-react-table";
 
-import { fetchALlUserProfiles} from '../../../services';
-
-
-
+import  SearchBar  from './SearchBar'
+import { fetchALlUserProfiles,fetchProfiles } from '../../services';
 
 
 
@@ -28,6 +26,15 @@ export default function SearchPage() {
     
         fetchData();
       }, []);
+
+      const handleSearch = async (searchValue) => {
+        try {
+         const searchData = await fetchProfiles(searchValue);
+          setData(searchData);
+        } catch (error) {
+          console.error("Error searching data:", error);
+        }
+      };
 
   const columns = useMemo(
     () => [
@@ -53,7 +60,11 @@ export default function SearchPage() {
         accessorKey: "date_of_birth", 
         header: "Date Of Birth" ,
         muiTableHeadCellProps: { sx: { color: "#1976d2" } }, 
-        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong> 
+        Cell: ({ renderedCellValue }) => {
+          const date = new Date(renderedCellValue);
+          const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+          return <strong>{formattedDate}</strong>;
+        }
       },
       {
         accessorKey: "place_of_birth", 
@@ -70,5 +81,10 @@ export default function SearchPage() {
     columns
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+     <SearchBar onSearch={handleSearch} /> 
+      <MaterialReactTable table={table} />
+    </>
+  );
 }

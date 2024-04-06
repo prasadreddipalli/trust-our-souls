@@ -18,8 +18,11 @@ const Review = ({ formData }) => {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Name & Address
           </Typography>
+       
           <Typography gutterBottom>First Name: {formData.first_name}</Typography>
           <Typography gutterBottom>Last Name: {formData.last_name}</Typography>
+          <Typography gutterBottom>Profile Picture: {formData.profile_picture}</Typography>
+          <Typography gutterBottom>ID Picturee: {formData.id_picture}</Typography>
           <Typography gutterBottom>Date of Birth: {dayjs(formData.date_of_birth).format('DD-MM-YYYY')}</Typography>
           <Typography gutterBottom>Time of Birth: {formData.time_of_birth}</Typography>
           <Typography gutterBottom>Place Of Birth: {formData.place_of_birth}</Typography>
