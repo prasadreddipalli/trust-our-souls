@@ -9,7 +9,7 @@ const TtleContent = ({ props }) => {
         sx={{
           position: 'relative',
           backgroundColor: `${props.backgroundColor}`,
-          color: '#fff',
+          color: `${props.textColor}`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',

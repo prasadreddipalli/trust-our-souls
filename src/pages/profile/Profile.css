@@ -1,7 +1,6 @@
 .card {
   width: 230px;
   height: 220px;
- /* padding-top: 22px;*/
   padding-bottom: 1px;
   border-radius: 25px;
   display: flex;
@@ -47,16 +46,15 @@ input[type="file"] {
   position: relative;
   padding: 6px;
   cursor: pointer;
- /* background: linear-gradient(270deg, #1976d2, #1976d2);*/
   margin-bottom: 25px;
 }
 
 .red-border {
   border-color: 1px solid red !important;
 }
-/* Custom CSS file */
+
 .react-toastify__toast-container {
-  width: 400px; /* Set the width of the toast container */
+  width: 400px; 
 }
 
 .img-wrap {
@@ -64,12 +62,11 @@ input[type="file"] {
   width: 200px;
   height: 200px;
   overflow: hidden;
- /* border-radius: 50%;*/
+
 }
 
 .img-upload:before {
-  content: "\f093";
-  font-size: 90px;
+ font-size: 90px;
   position: absolute;
   padding-top: 80px;
   top: 50%;

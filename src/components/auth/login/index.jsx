@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { doSignInWithEmailAndPassword, doSignInWithGoogle ,addUserToDB} from '../../../firebase/auth'
 import { useAuth } from '../../../contexts/authContext'
-import backgroundImage from '../../../images/landing.png';
-import loginInmage from '../../../images/couple.jpg';
 
 
 const Login = () => {

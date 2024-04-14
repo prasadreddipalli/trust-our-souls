@@ -33,7 +33,7 @@ import sc from "../images/sc.png"
 import story from "../images/story.jpg"
 import fm from "../images/fm.jpeg"
 import bc from "../images/bc.png"
-import oo from "../images/oo.jpg"
+import oo from "../images/oo.png"
 import tot from "../images/tot.jpg"
 
 import TitleContent from './TtileContent'
@@ -55,7 +55,8 @@ const MainPage = () => {
       With our iterative and proven process of blending cosmic and astronomical compatibility with neurodiversity compatibility, we assist you in finding your soulmate that you can cherish your entire life! \
       ",
     image: { tot },
-    backgroundColor : 'burlywood'
+    backgroundColor : 'burlywood',
+    textColor : '#fff'
   };
  
   const cardStyle = {
@@ -78,7 +79,7 @@ const MainPage = () => {
         <CardActionArea style={{ flex: 1 }}>
           <CardMedia
             component="img"
-            sx={{ height: '18vw',backgroundColor: 'aliceblue' }}
+            sx={{ height: '13vw',backgroundColor: 'aliceblue' }}
             image={image}
             alt={title}
           />

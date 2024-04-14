@@ -27,11 +27,10 @@ export const Services = () => {
         backgroundColor: 'burlywood'
     };
     return (
-        <Grid container spacing={2}>
+        <Grid container >
             <Grid item xs={12} sx={{ boxShadow: 0 }}>
                 <TitleContent props={healingProps} />
             </Grid>
-            <Divider />
             <Grid item xs={12} sx={{ boxShadow: 0 }}>
                 <TitleContent props={horoscopeProps} />
             </Grid>

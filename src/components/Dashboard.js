@@ -208,7 +208,7 @@ const  Dashboard=()=> {
                 >
                   Trust Our Souls
                 </Typography>
-                <Tooltip title="Logout">
+                <Tooltip>
                 <IconButton color="inherit" onClick={handleLogout} title="Logout">
                   <Badge color="secondary">
                     <Logout /> {/* Use the logout icon component */}

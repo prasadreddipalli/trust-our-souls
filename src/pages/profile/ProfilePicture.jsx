@@ -1,34 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import AWS from 'aws-sdk';
+import { Buffer } from 'buffer';
 import './Profile.css';
 
-const ImgUpload = ({ name, onChange, src }) => (
-  <label htmlFor={name} className="custom-file-upload fas">
-    <div className="img-wrap img-upload">
-      <img src={src} alt="Profile" />
-    </div>
-    <input id={name} type="file" onChange={onChange} />
-  </label>
-);
 
-const Profile = ({ src, name }) => (
-  <div className="card">
-    <div className="card-style">
-      <h1>Profile Card</h1>
-      <label htmlFor={name} className="custom-file-upload fas">
-        <div className="img-wrap">
-          <img src={src} alt="Profile" />
-        </div>
-      </label>
-    </div>
-  </div>
-);
 
-const Edit = ({ children }) => <div className="card">{children}</div>;
 
-const ProfilePicture = ({ name, image, handleInputChange }) => {
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(image);
-  const [active, setActive] = useState('edit');
+const ProfilePicture = ({ name,image,setImage , handleInputChange }) => {
  
+
   const photoUpload = (e) => {
     e.preventDefault();
     const reader = new FileReader();
@@ -36,16 +16,22 @@ const ProfilePicture = ({ name, image, handleInputChange }) => {
 
     reader.onloadend = () => {
       handleInputChange(name, selectedFile);
-      setImagePreviewUrl(reader.result);
+      setImage(reader.result);
     };
     reader.readAsDataURL(selectedFile);
   };
 
+
   return (
     <div>
-      <Edit>
-        <ImgUpload name={name} onChange={photoUpload} src={imagePreviewUrl} />
-      </Edit>
+      <div className="card">
+        <label htmlFor={name} className="custom-file-upload fas">
+          <div className="img-wrap img-upload">
+            <img src={image} alt={name} />
+          </div>
+          <input id={name} type="file" onChange={photoUpload} />
+        </label>
+      </div>
     </div>
   );
 };

@@ -17,18 +17,23 @@ import PreferencesForm from './PreferencesForm';
 import Review from './Review';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getUserFromLocalStorage, saveUserToLocalStorage } from '../../firebase/auth'
-import { fetchUserProfile, addUseProfile ,uploadToS3 } from '../../services';
+import { fetchUserProfile, addUseProfile, uploadToS3, uploadBlobToS3,getFileFromS3 } from '../../services';
 import { ToastContainer } from 'react-toastify';
-
+import idCardImage from '../../images/idCard.png'
+import personImage from '../../images/person.png'
 
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const steps = ['Name & address', 'Personal Details', 'Preferences', 'Review'];
+const steps = ['Name & address', 'Personal Details', 'Partner Preferences', 'Review'];
 
 export default function Profile() {
+  const [profileImage, setProfileImage] = useState(personImage);
+  const [idImage, setIdImage] = useState(idCardImage);
+
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [stepData, setStepData] = useState({});
   const [nextButtonClicked, setNextButtonClicked] = useState(false);
@@ -121,9 +126,9 @@ export default function Profile() {
 
   const updateValidFeilds = (validFields) => {
     const newValidFields = { ...validFields };
-    console.log("====== updateValidFeilds =========");
+    //console.log("====== updateValidFeilds =========");
     Object.entries(formData).forEach(([name, value]) => {
-      console.log(" field name " + name + " : " + value + " type " + typeof formData[name]);
+     // console.log(" field name " + name + " : " + value + " type " + typeof formData[name]);
       if (validFields.hasOwnProperty(name)) {
         if (typeof formData[name] === 'string' && formData[name].trim() === '') {
           newValidFields[name] = false;
@@ -133,10 +138,10 @@ export default function Profile() {
         if (name.trim() === 'date_of_birth') {
           newValidFields[name] = isValidBirthDate(value);
         }
-        console.log(" status name " + name + " " + newValidFields[name]);
+       // console.log(" status name " + name + " " + newValidFields[name]);
       }
     });
-    console.log("=================================");
+   // console.log("=================================");
     return newValidFields;
   }
 
@@ -154,6 +159,9 @@ export default function Profile() {
       toast.error('Age cannot be less than 18 years');
       return false;
     }
+   
+
+
     return true;
   }
   function isValidAgeRange() {
@@ -169,19 +177,42 @@ export default function Profile() {
     return true;
   }
 
+  const getFileExtension = (file) => {
+    const fileName = file.name;
+    const lastIndex = fileName.lastIndexOf('.');
+    if (lastIndex === -1) {
+      return ''; // No extension found
+    }
+    return fileName.slice(lastIndex + 1).toLowerCase(); // Extract and convert to lowercase
+  };
 
   const handleInputChange = (name, value) => {
     if (name.trim() === 'time_of_birth') {
       value = value.format('HH:mm');
     }
 
-    setFormData((prevFormData) => {
-      const updatedFormData = {
-        ...prevFormData,
-        [name]: value
-      };
-      return updatedFormData;
-    });
+
+    if (activeStep == 0) {
+      if (name == 'id_picture') {
+        
+         const idImgFile = URL.createObjectURL(value);
+          setIdImage(idImgFile);
+      }
+      if (name == 'profile_picture') {
+        const profileImgFile = URL.createObjectURL(value);
+        setProfileImage(profileImgFile);
+      }
+    }
+
+
+      setFormData((prevFormData) => {
+        const updatedFormData = {
+          ...prevFormData,
+          [name]: value
+        };
+        return updatedFormData;
+      });
+    
   };
 
   useEffect(() => {
@@ -202,16 +233,16 @@ export default function Profile() {
     },
   });
 
-  const getStepContent = (step, formData, nextButtonClicked) => {
+  const getStepContent = (step, formData, profileImage, idImage, setProfileImage, setIdImage,nextButtonClicked) => {
     switch (step) {
       case 0:
-        return <AddressForm formData={formData} handleInputChange={handleInputChange} validationStatus={validFieldsAddress} nextButtonClicked={nextButtonClicked} theme={theme} />;
+        return <AddressForm formData={formData} profileImage={profileImage} idImage={idImage} setProfileImage={setProfileImage} setIdImage={setIdImage} handleInputChange={handleInputChange} validationStatus={validFieldsAddress} nextButtonClicked={nextButtonClicked} theme={theme} />;
       case 1:
         return <PersnoalDetailsForm formData={formData} handleInputChange={handleInputChange} validationStatus={validFieldsPersonal} nextButtonClicked={nextButtonClicked} />;
       case 2:
         return <PreferencesForm formData={formData} handleInputChange={handleInputChange} validationStatus={validFieldsPreferences} nextButtonClicked={nextButtonClicked} />;
       case 3:
-        return <Review formData={formData} />;
+        return <Review formData={formData} profileImage={profileImage} idImage={idImage} />;
       default:
         throw new Error('Unknown step');
     }
@@ -225,6 +256,18 @@ export default function Profile() {
       if (!isValidAgeRange()) {
         return;
       }
+      
+    }
+    if (activeStep == 0){
+      if (profileImage == personImage){
+        toast.error('Please choose profile picture');
+        return false;
+      }
+      console.log("handleNext :: idImage" + idImage);
+      if (idImage == idCardImage){
+        toast.error('Please choose ID picture');
+        return false;
+      }
     }
     console.log("isValid " + isValid);
     if (isValid) {
@@ -234,6 +277,8 @@ export default function Profile() {
       saveUserProfile();
     }
   };
+
+
 
   const saveUserProfile = async () => {
     const user = getUserFromLocalStorage();
@@ -284,7 +329,9 @@ export default function Profile() {
     }
 
     const profileData = mapFormDataToProfileData(formData);
-   // uploadToS3(profileData.first_name+"_"+profileData.last_name,profileData.profile_picture);
+    uploadBlobToS3(profileData.first_name + "_" + profileData.last_name + "_profile",  profileImage);
+    uploadBlobToS3(profileData.first_name + "_" + profileData.last_name + "_id" ,  idImage);
+
     try {
       const resp = await addUseProfile(profileData);
     } catch (error) {
@@ -304,10 +351,27 @@ export default function Profile() {
     const fetchData = async (userId) => {
       try {
         const data = await fetchUserProfile(userId);
-        console.log(" from DB " + JSON.stringify(data));
-        setFormData(data);
+       
+        const isEmpty = Object.keys(data).length === 0;
+        if (!isEmpty) {
+     
+          setFormData(data);
+         const profileImage = await getFileFromS3(data.first_name + "_" + data.last_name + "_profile");
+         const idImage = await getFileFromS3(data.first_name + "_" + data.last_name + "_id");
+         if (profileImage != null) {
+          setProfileImage(profileImage);
+
+         }
+         if (idImage != null) {
+          setIdImage(idImage);
+         }
+         
+        
+         
+         }
+        
       } catch (error) {
-        // Handle error
+        console.log("OnLoad "+ error);
       }
     }
 
@@ -316,7 +380,7 @@ export default function Profile() {
 
 
   return (
-        <Container component="main" sx={{ mb: 4, width: '100%', overflow: 'hidden' }}>
+    <Container component="main" sx={{ mb: 4, width: '100%', overflow: 'hidden' }}>
       <Typography component="h1" variant="h4" align="center">
         Profile
       </Typography>
@@ -340,7 +404,7 @@ export default function Profile() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {getStepContent(activeStep, formData, nextButtonClicked)}
+          {getStepContent(activeStep, formData, profileImage, idImage,setProfileImage, setIdImage,nextButtonClicked)}
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             {activeStep !== 0 && (
               <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

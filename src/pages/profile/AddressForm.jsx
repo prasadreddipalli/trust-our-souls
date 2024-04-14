@@ -11,28 +11,30 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ProfilePicture from './ProfilePicture.jsx';
+import IDPicture from './IDPicture.jsx';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
-import profileImage from '../../images/profile.jpg'
-import idCardImage from '../../images/idCard.png'
-import personImage from '../../images/person.png'
 
 
-const AddressForm = ({ formData, handleInputChange, validationStatus, nextButtonClicked, theme }) => {
+
+
+const AddressForm = ({ formData, profileImage, idImage ,setProfileImage, setIdImage, handleInputChange, validationStatus, nextButtonClicked, theme }) => {
+
   return (
     <ThemeProvider theme={theme}>
+     
       <React.Fragment>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <ProfilePicture name="profile_picture" image={personImage}  handleInputChange={handleInputChange}/>
-            <br />
+            <ProfilePicture name="profile_picture" image={profileImage}  setImage={setProfileImage}  handleInputChange={handleInputChange}/> 
+          <br />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <ProfilePicture name="id_picture" image={idCardImage} handleInputChange={handleInputChange}/>
+           <ProfilePicture name="id_picture"  image={idImage} setImage={setIdImage} handleInputChange={handleInputChange}/> 
             <br />
             </Grid>
           <Grid item xs={12} sm={4}>
