@@ -26,8 +26,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
-import PeopleIcon from '@mui/icons-material/People';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { Logout } from '@mui/icons-material'; 
 import Tooltip from '@mui/material/Tooltip';
@@ -143,16 +143,16 @@ const  Dashboard=()=> {
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <ListItemText primary="Profile" />
+          <ListItemText primary="My Profile" />
         </ListItemButton>
         <ListItemButton  
           selected={activeLink === '/dashboard/search'}
           onClick={() => handleLinkClick('/search')}
           button="true" component={Link} to="/dashboard/search">
           <ListItemIcon>
-            <PersonSearchIcon />
+            <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="Search" />
+          <ListItemText primary="Profiles" />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>

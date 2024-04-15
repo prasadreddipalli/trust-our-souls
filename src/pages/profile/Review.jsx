@@ -87,11 +87,11 @@ const Review = ({ formData,profileImage,idImage}) => {
           <Typography gutterBottom>RelationShip Status: {formData.relationship_status}</Typography>
           <Typography gutterBottom>Children: {formData.no_of_children}</Typography>
           <Typography gutterBottom>Regilious Belief: {formData.religious_belief}</Typography>
-          <Typography gutterBottom>Enthicity: {formData.ethinicity}</Typography>
+          <Typography gutterBottom>Ethnicity: {formData.ethinicity}</Typography>
           <Typography gutterBottom>Gothra: {formData.gothra}</Typography>
           <Typography gutterBottom>Eating Habits: {formData.eating_habits}</Typography>
           <Typography gutterBottom>Start a Family ?: {formData.start_a_family}</Typography>
-          <Typography gutterBottom>Somke ?: {formData.smoke_frequency}</Typography>
+          <Typography gutterBottom>Smoke ?: {formData.smoke_frequency}</Typography>
           <Typography gutterBottom>Alcohol Comsumption ?: {formData.alcohol_frequency}</Typography>
 
         </Grid>
@@ -100,12 +100,12 @@ const Review = ({ formData,profileImage,idImage}) => {
             Partner Preferences
           </Typography>
           <Typography gutterBottom>Gender: {formData.preferred_gender}</Typography>
-          <Typography gutterBottom>Education:: {formData.preferred_education}</Typography>
+          <Typography gutterBottom>Education: {formData.preferred_education}</Typography>
           <Typography gutterBottom>Location: {formData.preferred_location}</Typography>
           <Typography gutterBottom>Profession: {formData.preferred_profession}</Typography>
           <Typography gutterBottom>Low Age: {formData.preferred_low_age_range}</Typography>
           <Typography gutterBottom>High Age: {formData.preferred_high_age_range}</Typography>
-          <Typography gutterBottom>Prefered Eating Habits: {formData.preferred_eating_habits}</Typography>
+          <Typography gutterBottom>Preferred Eating Habits: {formData.preferred_eating_habits}</Typography>
           <Typography gutterBottom>Comments: {formData.comments}</Typography>
 
         </Grid>

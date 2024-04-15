@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable
@@ -8,13 +8,31 @@ import  SearchBar  from './SearchBar'
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { fetchALlUserProfiles,fetchProfiles } from '../../services';
+import { fetchALlUserProfiles,fetchProfiles ,getFileFromS3} from '../../services';
 
 
 
 export default function SearchPage() {
 
     const [data, setData] = React.useState(0);
+    const [profileImage, setProfileImage] = useState();
+    const [idImage, setIdImage] = useState();
+
+
+    const fetchData = async (name) => {
+      try {
+     
+         const profileImage = await getFileFromS3(name + "_profile");
+         const idImage = await getFileFromS3(name + "_id");
+          setProfileImage(profileImage);
+          setIdImage(idImage);
+        
+      } catch (error) {
+        console.log("OnLoad "+ error);
+      }
+    }
+
+  
     React.useEffect(() => {
        
          const fetchData = async () => {
@@ -93,7 +111,14 @@ export default function SearchPage() {
     }),
     //custom expand button rotation
     muiExpandButtonProps: ({ row, table }) => ({
-      onClick: () => table.setExpanded({ [row.id]: !row.getIsExpanded() }), //only 1 detail panel open at a time
+      onClick: () => { 
+
+       
+        fetchData(row.original.first_name+"_"+ row.original.last_name);
+      
+
+        table.setExpanded({ [row.id]: !row.getIsExpanded() })
+      }, //only 1 detail panel open at a time
       sx: {
         transform: row.getIsExpanded() ? 'rotate(180deg)' : 'rotate(-90deg)',
         transition: 'transform 0.2s',
@@ -113,16 +138,16 @@ export default function SearchPage() {
            <Grid container spacing={2}>
       <Grid item xs={12} sm={4}>
       <div className="card">
-         {/* <img src={profileImg} alt="Profile" /> */}
-          </div>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-        <div className="card">
-        {/*  <img  src={idImg} alt="Identification" /> */}
+          <img src={profileImage} alt="Profile" /> 
           </div>
         </Grid>
         <Grid item xs={12} sm={4}></Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
+        <div className="card">
+         <img  src={idImage} alt="Identification" /> 
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Name & Address
           </Typography>
@@ -134,7 +159,7 @@ export default function SearchPage() {
           <Typography gutterBottom>Zip / Postal Code: {row.original.zip}</Typography>
           <Typography gutterBottom>Country: {row.original.country}</Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Personal Information
           </Typography>
@@ -153,7 +178,7 @@ export default function SearchPage() {
           <Typography gutterBottom>Alcohol Comsumption ?: {row.original.alcohol_frequency}</Typography>
 
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Partner Preferences
           </Typography>
