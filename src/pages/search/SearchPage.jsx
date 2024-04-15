@@ -63,19 +63,19 @@ export default function SearchPage() {
         accessorKey: "first_name", 
         header: "First Name",
         muiTableHeadCellProps: { sx: { color: "#1976d2" } }, 
-         Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong> 
+         Cell: ({ renderedCellValue }) => <>{renderedCellValue}</>
       },
       {
         accessorKey: "last_name", 
         header: "LastName" ,
         muiTableHeadCellProps: { sx: { color: "#1976d2" } }, 
-        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong> 
+        Cell: ({ renderedCellValue }) => <>{renderedCellValue}</> 
       },
       {
         accessorKey: "gender", 
         header: "Gender" ,
         muiTableHeadCellProps: { sx: { color: "#1976d2" } }, 
-        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong> 
+        Cell: ({ renderedCellValue }) => <>{renderedCellValue}</> 
       },
       {
         accessorKey: "date_of_birth", 
@@ -84,14 +84,14 @@ export default function SearchPage() {
         Cell: ({ renderedCellValue }) => {
           const date = new Date(renderedCellValue);
           const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-          return <strong>{formattedDate}</strong>;
+          return <>{formattedDate}</>;
         }
       },
       {
         accessorKey: "place_of_birth", 
         header: "Place of Birth" ,
         muiTableHeadCellProps: { sx: { color: "#1976d2" } }, 
-        Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong> 
+        Cell: ({ renderedCellValue }) => <>{renderedCellValue}</> 
       }
     ],
     []
